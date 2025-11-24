@@ -1,0 +1,56 @@
+﻿@model IEnumerable<CampusTech.Models.Reservation>
+@{
+    ViewData["Title"] = "Reservas Registradas";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-primary font-weight-bold">📋 Reservas de Laboratorios</h2>
+
+    <a asp-action="Create" class="btn btn-success px-4">
+        ➕ Nueva Reserva
+    </a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info text-center shadow-sm py-4">
+        <h5 class="mb-0">
+            💡 Aún no hay reservas registradas.
+            <br />Use el botón “Nueva Reserva” para agregar una.
+        </h5>
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-hover shadow-sm">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Código</th>
+                    <th>Profesor</th>
+                    <th>Correo</th>
+                    <th>Laboratorio</th>
+                    <th>Fecha</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Motivo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var r in Model)
+                {
+                    <tr>
+                        <td class="font-weight-bold">@r.ReservationCode</td>
+                        <td>@r.ProfessorName</td>
+                        <td>@r.InstitutionalEmail</td>
+                        <td>@r.Lab</td>
+                        <td>@r.ReservationDate.ToString("dd/MM/yyyy")</td>
+                        <td>@r.StartTime.ToString(@"hh\:mm")</td>
+                        <td>@r.EndTime.ToString(@"hh\:mm")</td>
+                        <td>@r.Reason</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
