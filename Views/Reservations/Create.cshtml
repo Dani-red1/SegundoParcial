@@ -1,0 +1,88 @@
+﻿@model CampusTech.Models.Reservation
+@{
+    ViewData["Title"] = "Nueva Reserva de Laboratorio";
+    var labs = ViewBag.Labs as List<string> ?? new List<string>();
+}
+
+<h2 class="mb-4 text-primary font-weight-bold">➕ Registrar Nueva Reserva</h2>
+
+<div class="card shadow-sm border-0">
+    <div class="card-body">
+
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger mb-3"></div>
+
+            <h5 class="text-secondary border-bottom pb-2 mb-3">📌 Información del Profesor</h5>
+
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label asp-for="ProfessorName" class="font-weight-bold"></label>
+                    <input asp-for="ProfessorName" class="form-control" placeholder="Ej. María Solano" />
+                    <span asp-validation-for="ProfessorName" class="text-danger small"></span>
+                </div>
+                <div class="form-group col-md-6">
+                    <label asp-for="InstitutionalEmail" class="font-weight-bold"></label>
+                    <input asp-for="InstitutionalEmail" class="form-control" placeholder="profesor@campus.edu" />
+                    <span asp-validation-for="InstitutionalEmail" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <h5 class="text-secondary border-bottom pb-2 mt-4 mb-3">🖥️ Datos de Reserva</h5>
+
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    <label asp-for="Lab" class="font-weight-bold"></label>
+                    <select asp-for="Lab" class="form-control">
+                        <option value="">Seleccione un laboratorio...</option>
+                        @foreach (var lab in labs)
+                        {
+                            <option value="@lab">@lab</option>
+                        }
+                    </select>
+                    <span asp-validation-for="Lab" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label asp-for="ReservationDate" class="font-weight-bold"></label>
+                    <input asp-for="ReservationDate" class="form-control" type="date" />
+                    <span asp-validation-for="ReservationDate" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label asp-for="StartTime" class="font-weight-bold"></label>
+                    <input asp-for="StartTime" class="form-control" type="time" />
+                    <span asp-validation-for="StartTime" class="text-danger small"></span>
+                </div>
+
+                <div class="form-group col-md-2">
+                    <label asp-for="EndTime" class="font-weight-bold"></label>
+                    <input asp-for="EndTime" class="form-control" type="time" />
+                    <span asp-validation-for="EndTime" class="text-danger small"></span>
+                </div>
+            </div>
+
+            <div class="form-group mt-3">
+                <label asp-for="Reason" class="font-weight-bold"></label>
+                <textarea asp-for="Reason" class="form-control" rows="3" placeholder="Explique brevemente el motivo de la reserva..."></textarea>
+                <span asp-validation-for="Reason" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ReservationCode" class="font-weight-bold"></label>
+                <input asp-for="ReservationCode" class="form-control" placeholder="Ej. RES-001" />
+                <span asp-validation-for="ReservationCode" class="text-danger small"></span>
+            </div>
+
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary px-4 mr-2">
+                    💾 Guardar Reserva
+                </button>
+                <a asp-action="Index" class="btn btn-secondary px-4">🔙 Volver</a>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
